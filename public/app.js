@@ -4,12 +4,25 @@ const userData = {
     addingTask : false
 }
 
+const sleep = (time) => new Promise(resolve=>setTimeout(resolve,time));
+
+const closeInput = async () => {
+    const input = addBtn.querySelector('input');
+    input.value = "";
+    await sleep(50);
+    addBtn.style.width = "75px";;
+    input.remove();
+    addBtn.innerText = "add";
+    userData.addingTask = false;
+};
+
 addBtn.addEventListener("click", (e) => {
     const { addingTask } = userData;
     if (!addingTask) {
         addBtn.innerText = "";
 
         const input = document.createElement("input");
+        input.placeholder = "Add a new task";
         input.type = "text";
         const inputStyles = {
             width: "100%",
@@ -25,20 +38,23 @@ addBtn.addEventListener("click", (e) => {
         addBtn.style.padding = "5px";
         addBtn.appendChild(input);
 
-
-        const closeInput = () => {
-            input.value = "";
-            setTimeout(()=>{addBtn.style.width = "75px";},500);
-            setTimeout(()=>{
-                input.remove();
-                addBtn.innerText = "add";
-                userData.addingTask = false;
-            },1000);
-        };input.onblur = closeInput;
+        input.onblur = closeInput;
         input.addEventListener("keydown",(e)=>{
             if(e.key === "Enter"){input.blur();}
         });
 
         userData.addingTask = true;
+    }
+});
+
+document.body.addEventListener('touchstart', async (e) => {
+    if(e.target === document.body && userData.addingTask){
+        closeInput();
+    }
+});
+
+document.body.addEventListener('click', async (e) => {
+    if(e.target === document.body && userData.addingTask){
+        closeInput();
     }
 });
