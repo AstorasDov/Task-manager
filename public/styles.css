@@ -28,6 +28,7 @@ h1,p{
     padding: 0.2em 0;
     border-radius: 20px;
     cursor: pointer;
+    transition: 0.1s;
 }
 
 #container{
@@ -53,5 +54,13 @@ h1,p{
   text-align: center;
   background-color:lime;
   box-sizing: border-box;
-  padding: 0.2em;
+  padding: 0.2em 0.5em;
+  transition: 0.1s;
+}.task:hover{
+    font-size: 1.05em;
+    text-decoration: line-through;
+    cursor: pointer;
+}.task:active{
+    font-size: 0.85em;
+    opacity: 0.5;
 }
