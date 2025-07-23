@@ -20,9 +20,14 @@ async function loadTasks () {
     };const taskEl = Array.from(container.querySelectorAll('.task'));
     taskEl.forEach(task=>{
         task.addEventListener("click",async ()=>{
-            await sleep(150);
+            await sleep(60);
+            await fetch(`/api/tasks/${task.innerText}`,{method: "DELETE"});
             task.remove();
-        })
+            if(Array.from(container.querySelectorAll('.task')).length == 0){
+                document.querySelector("#reminder").style.display = "block";
+                container.style.marginTop = "0";
+            };
+        });
     })
 }
 

@@ -1,5 +1,5 @@
 const http = require('http');
-const {readFile} = require('fs');
+const {readFile,writeFile} = require('fs');
 const path = require('path');
 
 const read = (path) => {
@@ -7,6 +7,15 @@ const read = (path) => {
         readFile(path,'utf-8',( err,data )=>{
             if(data){resolve(data);}
             else reject(err);
+        });
+    });
+}
+
+const write = (path,data) => {
+    return new Promise((resolve,reject)=>{
+        writeFile(path,data,'utf-8',(err)=>{
+            if(err){reject(err);}
+            else resolve();
         });
     });
 }
@@ -32,6 +41,15 @@ const server = http.createServer(async (req,res)=>{
             } catch (err) {
                 res.end();
             };break;
+    }
+
+    if(req.url.startsWith('/api/tasks/') && req.method == "DELETE"){
+        const taskName = req.url.split('/')[3].replace(/%20/g,' ');
+        const tasks = JSON.parse(await read('./tasks.json')).tasks;
+        const index = tasks.findIndex(task => task.name === taskName);
+        tasks.splice(index,1);
+        await write(path.join(__dirname,'tasks.json'),JSON.stringify({tasks:tasks}));
+        res.end();
     }
 
     switch(extname){

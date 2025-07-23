@@ -32,7 +32,7 @@ h1,p{
 }
 
 #container{
-    margin-top: 30px;
+    margin-top: 50px;
     width: 90%;
     max-width: 500px;
     display: flex;
@@ -40,7 +40,7 @@ h1,p{
     align-items: center;
     gap: 0.5em;
     flex-direction: column;
-    max-height: 50%;
+    max-height: 45%;
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -52,7 +52,7 @@ h1,p{
   display: block;
   word-break: break-word;
   text-align: center;
-  background-color:lime;
+  background-color:limegreen;
   box-sizing: border-box;
   padding: 0.2em 0.5em;
   transition: 0.1s;
